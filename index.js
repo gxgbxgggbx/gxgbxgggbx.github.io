@@ -65,6 +65,10 @@ function findBoards(currentBoard, possibleBoards){
 }
 
 function setPictures(board){
+    var numBoard = 
+    [["","","","","",""],
+     ["","","","","",""],
+     ["","","","","",""]]
     for(rowIndex in board){
         for(collumnIndex in board[rowIndex]){
             var _char = board[rowIndex][collumnIndex]
@@ -82,9 +86,25 @@ function setPictures(board){
                         possibleItems.push(possibleBoardsTemp[boardIndex][rowIndex][collumnIndex])
                     }
                 }
-                document.getElementById(`r${rowIndexPlusOne}c${collumnIndexPlusOne}`).src = "assets/" + possibleItems.length + ".png"
+                numBoard[rowIndex][collumnIndex] = possibleItems.length
             }
         }
+    }
+    if(!foundBoard){
+        var maxNumber = 0
+        var maxNumRow = 2
+        var maxNumCollumn = 1
+        for(rowIndex in numBoard){
+            for(collumnIndex in numBoard[rowIndex]){
+                var currItm = numBoard[rowIndex][collumnIndex]
+                if(parseInt(currItm)>parseInt(maxNumber)){
+                    maxNumber = currItm
+                    maxNumRow = parseInt(rowIndex)+1
+                    maxNumCollumn = parseInt(collumnIndex)+1
+                }
+            }
+        }
+        document.getElementById(`r${maxNumRow}c${maxNumCollumn}`).src = "assets/" + "thisOne" + ".png"
     }
 }
 
