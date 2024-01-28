@@ -63,6 +63,31 @@ function findBoards(currentBoard, possibleBoards){
     } 
     return foundBoards
 }
+
+function setPictures(board){
+    for(rowIndex in board){
+        for(collumnIndex in board[rowIndex]){
+            var _char = board[rowIndex][collumnIndex]
+            if(!_char == ""){
+                var rowIndexPlusOne = parseInt(rowIndex) + 1
+                var collumnIndexPlusOne = parseInt(collumnIndex) + 1
+                document.getElementById(`r${rowIndexPlusOne}c${collumnIndexPlusOne}`).src = "assets/" + _char + ".png"
+            }else{
+                var rowIndexPlusOne = parseInt(rowIndex) + 1
+                var collumnIndexPlusOne = parseInt(collumnIndex) + 1
+                var possibleBoardsTemp = findBoards(board, possibleBoards)
+                var possibleItems = []
+                for(boardIndex in possibleBoardsTemp){
+                    if(!possibleItems.includes(possibleBoardsTemp[boardIndex][rowIndex][collumnIndex])){
+                        possibleItems.push(possibleBoardsTemp[boardIndex][rowIndex][collumnIndex])
+                    }
+                }
+                document.getElementById(`r${rowIndexPlusOne}c${collumnIndexPlusOne}`).src = "assets/" + possibleItems.length + ".png"
+            }
+        }
+    }
+}
+
 function imgClicked(row, collumn){
     if(!foundBoard && !alreadyOpen){
         alreadyOpen = true
@@ -130,9 +155,13 @@ function imgClicked(row, collumn){
         })
         modal.addFooterBtn('Submit', 'tingle-btn tingle-btn--primary tingle-btn--pull-right', function() {
             currentBoard[row-1][collumn-1] = document.getElementById('selectCardItem').value
+            possibleBoardsTemp = findBoards(currentBoard, possibleBoards)
+            if(possibleBoardsTemp.length == 1){
+                currentBoard = possibleBoardsTemp[0]
+            }
             console.log(currentBoard)
-            console.log(findBoards(currentBoard, possibleBoards))
-            document.getElementById(`r${row}c${collumn}`).src = "assets/" + document.getElementById('selectCardItem').value + ".png"
+            console.log(possibleBoardsTemp)
+            setPictures(currentBoard)
             modal.close()
         })
 
@@ -140,3 +169,4 @@ function imgClicked(row, collumn){
     }
 }
 
+setPictures(currentBoard)
