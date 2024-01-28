@@ -10,7 +10,32 @@ var possibleBoards = [[ ["f","s","u","f","c","m"],
 
                        [["u","m","v","m","f","s"],
                         ["m","v","s","c","c","f"],
-                        ["s","u","f","m","f","s"]]]
+                        ["s","u","f","m","f","s"]],
+                       
+                       [["f","v","u","f","u","m"],
+                        ["s","m","c","s","m","v"],
+                        ["s","f","c","m","f","s"]],
+                       
+                       [["f","c","m","s","u","f"],
+                        ["u","f","v","m","c","s"],
+                        ["m","v","s","m","f","s"]],
+
+                       [["m","f","c","f","v","s"],
+                        ["c","u","m","v","u","f"],
+                        ["s","m","s","m","f","s"]],
+                    
+                       [["m","f","c","m","v","s"],
+                        ["f","u","m","v","u","c"],
+                        ["s","f","s","m","f","s"]],
+                    
+                       [["m","f","u","f","s","s"],
+                        ["c","s","m","v","u","f"],
+                        ["c","m","v","m","f","s"]],
+
+                       [["f","s","u","f","u","m"],
+                        ["v","m","f","s","m","v"],
+                        ["s","c","c","m","f","s"]],
+                    ]
 
 function findBoards(currentBoard, possibleBoards){
     var foundBoards = possibleBoards
