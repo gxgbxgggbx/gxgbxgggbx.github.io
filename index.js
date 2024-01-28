@@ -1,3 +1,6 @@
+var foundBoard = false
+var alreadyOpen = false
+
 var currentBoard = [["","","","","",""],
                     ["","","","","",""],
                     ["","","","","",""]]
@@ -41,7 +44,6 @@ function findBoards(currentBoard, possibleBoards){
     var foundBoards = possibleBoards
     for(lineIndex in currentBoard){
         var line = currentBoard[lineIndex]
-        console.log(line)
         for(charIndex in line){
             char = line[charIndex]
             if(char != ""){
@@ -60,5 +62,81 @@ function findBoards(currentBoard, possibleBoards){
         }
     } 
     return foundBoards
+}
+function imgClicked(row, collumn){
+    if(!foundBoard && !alreadyOpen){
+        alreadyOpen = true
+        var modal = new tingle.modal({
+            footer: true,
+            stickyFooter: false,
+            closeMethods: ['button'],
+            closeLabel: "Close",
+            cssClass: ['custom-class-1', 'custom-class-2'],
+            onOpen: function() {
+            },
+            onClose: function() {
+                alreadyOpen = false
+                modal.destroy()
+            },
+            beforeClose: function() {
+                return true
+            }
+        })
+        possibleBoardsTemp = findBoards(currentBoard, possibleBoards)
+        var possibleItems = []
+        for(boardIndex in possibleBoardsTemp){
+            if(!possibleItems.includes(possibleBoardsTemp[boardIndex][row-1][collumn-1])){
+                possibleItems.push(possibleBoardsTemp[boardIndex][row-1][collumn-1])
+            }
+        }
+        var htmlDropdown = "<select id='selectCardItem'  style='width: 100%;height: 40%;font-size:25px;'>"
+        for(possibleItemIndex in possibleItems){
+            switch (possibleItems[possibleItemIndex]) {
+                case "m":
+                    htmlDropdown += "<option value='m'>Mushroom</option>"
+                    break;
+                
+                case "f":
+                    htmlDropdown += "<option value='f'>Flower</option>"
+                    break;
+
+                case "v":
+                    htmlDropdown += "<option value='v'>10 Coins</option>"
+                    break;
+
+                case "c":
+                    htmlDropdown += "<option value='c'>20 Coins</option>"
+                    break;
+
+                case "s":
+                    htmlDropdown += "<option value='s'>Star</option>"
+                    break;
+
+
+                case "u":
+                    htmlDropdown += "<option value='u'>1-Up</option>"
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        htmlDropdown += "</select>"
+        modal.setContent(htmlDropdown)
+
+
+        modal.addFooterBtn('Cancel', 'tingle-btn tingle-btn--danger', function() {
+            modal.close()
+        })
+        modal.addFooterBtn('Submit', 'tingle-btn tingle-btn--primary tingle-btn--pull-right', function() {
+            currentBoard[row-1][collumn-1] = document.getElementById('selectCardItem').value
+            console.log(currentBoard)
+            console.log(findBoards(currentBoard, possibleBoards))
+            document.getElementById(`r${row}c${collumn}`).src = "assets/" + document.getElementById('selectCardItem').value + ".png"
+            modal.close()
+        })
+
+        modal.open()
+    }
 }
 
