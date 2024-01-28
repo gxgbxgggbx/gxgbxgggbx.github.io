@@ -158,6 +158,7 @@ function imgClicked(row, collumn){
             possibleBoardsTemp = findBoards(currentBoard, possibleBoards)
             if(possibleBoardsTemp.length == 1){
                 currentBoard = possibleBoardsTemp[0]
+                foundBoard = true
             }
             console.log(currentBoard)
             console.log(possibleBoardsTemp)
